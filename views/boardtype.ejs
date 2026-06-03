@@ -1,0 +1,29 @@
+<% if (boardtypes && boardtypes.length > 0) { %>
+  <table class="table table-bordered border-primary table-hover" style="text-align: center;">
+    <thead class="table-primary">
+      <tr>
+        <th>제목</th>
+        <th>페이지당 글 수</th>
+        <th>설명</th>
+        <th>일반 사용자 쓰기</th>
+        <th>댓글</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <% boardtypes.forEach((boardtype) => { %>
+      <tr>
+        <td><%= boardtype.title %></td>
+        <td><%= boardtype.numPerPage %></td>
+        <td><%= boardtype.description %></td>
+        <td><%= boardtype.write_YN %></td>
+        <td><%= boardtype.re_YN %></td>
+        <td><a href="/board/type/update/<%= boardtype.type_id %>">수정</a></td>
+        <td><a href="/board/type/delete/<%= boardtype.type_id %>" onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false">삭제</a></td>
+      </tr>
+    <% }) %>
+  </table>
+<% } else { %>
+  <p>자료가 없으니 게시판 종류 추가 버튼으로 코드를 추가해 주십시오. </p>
+<% } %>
+
+<a href="/board/type/create"><button class="btn btn-outline-secondary btn-sm" type="submit">게시판 종류 추가</button></a>

@@ -1,0 +1,72 @@
+<div class="container">
+  <h2>
+    <% if (mode === 'create') { %>작성<% } %>
+    <% if (mode === 'reply') { %>답변<% } %>
+    <% if (mode === 'update') { %>수정<% } %>
+    <% if (mode === 'detail') { %>상세<% } %>
+  </h2>
+
+  <% const isDetail = mode === 'detail'; %>
+  <% const readonly = isDetail ? 'readonly' : ''; %>
+  <form action="<%= formAction || '#' %>" method="post">
+    <input type="hidden" name="type_id" value="<%= boardtype.type_id || board.type_id %>">
+    <input type="hidden" name="loginid" value="<%= board.loginid || sessionLoginid || '' %>">
+    <input type="hidden" name="pNum" value="<%= pNum %>">
+    <% if (mode === 'update') { %>
+      <input type="hidden" name="board_id" value="<%= board.board_id %>">
+    <% } %>
+    <% if (mode === 'reply') { %>
+      <input type="hidden" name="parent_board_id" value="<%= board.parent_board_id %>">
+    <% } %>
+
+    <div class="mb-3">
+      <label class="form-label" for="title">제목</label>
+      <input class="form-control" id="title" type="text" name="title" value="<%= board.title || '' %>" style="width:300px;" <%= readonly %>>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="writer">작성자</label>
+      <input class="form-control" id="writer" type="text" name="writer" value="<%= mode === 'reply' ? who : (board.name || who || '') %>" style="width:300px;" disabled>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="content">내용</label>
+      <textarea class="form-control" id="content" name="content" style="width:800px;height:200px;" <%= readonly %>><%= board.content || '' %></textarea>
+    </div>
+
+    <% if (!isDetail && cls !== 'MNG') { %>
+      <div class="mb-3">
+        <label class="form-label" for="password">게시글 수정/삭제 비밀번호</label>
+        <input class="form-control" id="password" type="text" name="password" style="width:300px;">
+      </div>
+    <% } %>
+
+    <% if (mode === 'create') { %>
+      <button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+    <% } %>
+    <% if (mode === 'reply') { %>
+      <button class="btn btn-outline-primary btn-sm" type="submit">작성</button>
+    <% } %>
+    <% if (mode === 'update') { %>
+      <button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
+    <% } %>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="/board/view/<%= boardtype.type_id || board.type_id %>/<%= pNum %>"><button type="button" class="btn btn-info me-md-2">목록</button></a>
+
+      <% if (mode === 'detail' && (cls === 'MNG' || (cls === 'CST' && board.loginid === sessionLoginid))) { %>
+        <% if (canReply) { %>
+          <a href="/board/reply/<%= board.board_id %>/<%= pNum %>">
+            <button type="button" class="btn btn-info me-md-2">답변</button>
+          </a>
+        <% } %>
+        <a href="/board/update/<%= board.board_id %>/<%= board.type_id %>/<%= pNum %>">
+          <button type="button" class="btn btn-info me-md-2">수정</button>
+        </a>
+        <a href="/board/delete/<%= board.board_id %>/<%= board.type_id %>/<%= pNum %>" onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false">
+          <button type="button" class="btn btn-info me-md-2">삭제</button>
+        </a>
+      <% } %>
+    </div>
+  </form>
+</div>

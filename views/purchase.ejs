@@ -1,0 +1,37 @@
+<div class="container">
+  <% if (!purchases || purchases.length === 0) { %>
+    <p>구매 내역이 없습니다.</p>
+  <% } else { %>
+    <table class="table table-bordered">
+      <tr style="text-align:center;vertical-align:middle;">
+        <th>상품</th><th>상품명</th><th>단가</th><th>구매량</th><th>총금액</th><th>구매일</th><th>취소여부</th>
+      </tr>
+      <% purchases.forEach((purchase) => { %>
+        <tr style="text-align:center;vertical-align:middle;">
+          <td>
+            <a href="/detail/<%= purchase.prod_id %>" style="text-decoration:none;">
+              <% if (purchase.image) { %>
+                <img src="/image/<%= purchase.image %>" alt="<%= purchase.name %>" style="width:100px;height:100px;object-fit:cover;">
+              <% } else { %>
+                이미지 없음
+              <% } %>
+            </a>
+          </td>
+          <td><%= purchase.name %></td>
+          <td><%= purchase.price %></td>
+          <td><%= purchase.qty %></td>
+          <td><%= purchase.total %></td>
+          <td><%= purchase.date %></td>
+          <td>
+            <% if (purchase.cancel === 'Y') { %>
+              취소된 상품
+            <% } else { %>
+              <a href="/purchase/cancel/<%= purchase.purchase_id %>" style="text-decoration:none;">구매취소</a>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+  <a href="/"><button class="btn btn-outline-primary btn-sm" type="button">상품 목록 돌아가기</button></a>
+</div>

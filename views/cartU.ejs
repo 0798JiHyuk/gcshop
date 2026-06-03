@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>cart 테이블 수정</h2>
+  <form action="/purchase/cart/update_process" method="post">
+    <input type="hidden" name="cart_id" value="<%= cart.cart_id %>">
+
+    <div class="mb-3">
+      <label class="form-label" for="loginid">고객</label>
+      <select name="loginid" id="loginid">
+        <% people.forEach((person) => { %>
+          <option value="<%= person.loginid %>" <%= person.loginid === cart.loginid ? 'selected' : '' %>><%= person.loginid %> : <%= person.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="prod_id">상품</label>
+      <select name="prod_id" id="prod_id">
+        <% products.forEach((product) => { %>
+          <option value="<%= product.prod_id %>" <%= Number(product.prod_id) === Number(cart.prod_id) ? 'selected' : '' %>><%= product.prod_id %> : <%= product.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="date">날짜</label>
+      <input class="form-control" id="date" type="text" name="date" value="<%= cart.date %>" readonly style="width:300px;background-color:rgb(204,203,203);">
+    </div>
+
+    <button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
+    <a href="/purchase/cart/view"><button class="btn btn-outline-primary btn-sm" type="button">카트 목록 돌아가기</button></a>
+  </form>
+</div>

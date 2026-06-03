@@ -1,0 +1,64 @@
+<div class="container">
+  <h2><%= table.table_name %> 테이블</h2>
+  <p class="text-muted"><%= table.table_comment || '테이블 comment가 없습니다.' %></p>
+
+  <h4 class="mt-4">컬럼 정보</h4>
+  <table class="table table-bordered border-primary">
+    <thead>
+      <tr>
+        <th>컬럼명</th>
+        <th>타입</th>
+        <th>Null</th>
+        <th>Key</th>
+        <th>Default</th>
+        <th>Extra</th>
+        <th>컬럼 설명</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% columns.forEach((column) => { %>
+        <tr>
+          <td><%= column.column_name %></td>
+          <td><%= column.column_type %></td>
+          <td><%= column.is_nullable %></td>
+          <td><%= column.column_key || '-' %></td>
+          <td><%= column.column_default == null ? '-' : column.column_default %></td>
+          <td><%= column.extra || '-' %></td>
+          <td><%= column.column_comment || '-' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h4 class="mt-4">테이블 내용</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <% columns.forEach((column) => { %>
+            <th><%= column.column_comment || column.column_name %></th>
+          <% }) %>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (!rows || rows.length === 0) { %>
+          <tr>
+            <td colspan="<%= columns.length %>" class="text-center">자료가 없습니다.</td>
+          </tr>
+        <% } else { %>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <% columns.forEach((column) => { %>
+                <td><%= row[column.column_name] == null ? '' : row[column.column_name] %></td>
+              <% }) %>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="/table/manage"><button type="button" class="btn btn-info me-md-2">목록</button></a>
+  </div>
+</div>

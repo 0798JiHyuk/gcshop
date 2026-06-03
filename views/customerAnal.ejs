@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>지역별 고객 분포</h2>
+
+  <% percentage.forEach((item) => { %>
+    <input type="hidden" value="<%= item.rate %>" class="data" name="rate">
+    <input type="hidden" value="<%= item.address %>" class="address" name="address">
+  <% }) %>
+
+  <canvas id="graph" width="500" height="500" style="background-color: aliceblue"></canvas>
+
+  <script>
+    let data = document.getElementsByClassName("data");
+    let address = document.getElementsByClassName("address");
+    let colors = ["blue", "magenta", "green", "yellow", "red", "black", "gray", "orange", "purple"];
+    let canvas = document.getElementById("graph");
+    let context = canvas.getContext("2d");
+
+    if (data.length === 0) {
+      context.font = "20px malgun gothic";
+      context.fillStyle = "black";
+      context.fillText("자료가 없습니다.", 20, 40);
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      context.font = "20px malgun gothic";
+      context.fillStyle = colors[i % colors.length];
+      context.fillText(address[i].value + " | " + data[i].value + "%", 20, 20 + 20 * i);
+    }
+
+    let angle = 0;
+    for (let i = 0; i < data.length; i++) {
+      let rate = parseFloat(data[i].value) / 100;
+      context.fillStyle = colors[i % colors.length];
+      context.beginPath();
+      context.moveTo(250, 250);
+      context.arc(250, 250, 210, angle, angle + (Math.PI * 2 * rate));
+      context.lineTo(250, 250);
+      context.fill();
+      angle += Math.PI * 2 * rate;
+    }
+  </script>
+</div>

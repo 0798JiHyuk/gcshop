@@ -1,0 +1,45 @@
+<div class="container">
+  <% function className(value) {
+    if (value === 'MNG') return '관리자';
+    if (value === 'CEO') return '경영진';
+    return '고객';
+  } %>
+
+  <% if (!persons || persons.length === 0) { %>
+    <p>자료가 없으니 고객 추가 버튼으로 고객을 추가해 주십시오.</p>
+  <% } else { %>
+    <table class="table table-bordered border-primary table-hover" style="text-align: center;">
+      <thead class="table-primary">
+        <tr>
+          <th>ID</th>
+          <th>PW</th>
+          <th>이름</th>
+          <th>성별</th>
+          <th>주소</th>
+          <th>전화번호</th>
+          <th>생일</th>
+          <th>클래스</th>
+          <th colspan="2">메뉴</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% persons.forEach((person) => { %>
+          <tr>
+            <td><%= person.loginid %></td>
+            <td><%= person.password %></td>
+            <td><%= person.name %></td>
+            <td><%= person.mf === 'f' ? '여자' : '남자' %></td>
+            <td><%= person.address || '' %></td>
+            <td><%= person.tel || '' %></td>
+            <td><%= person.birth %></td>
+            <td><%= person.class %> (<%= className(person.class) %>)</td>
+            <td><a href="/person/update/<%= person.loginid %>" style="text-decoration: none;">수정</a></td>
+            <td><a href="/person/delete/<%= person.loginid %>" onclick="return confirm('정말로 삭제하시겠습니까?')" style="text-decoration: none;">삭제</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <a href="/person/create"><button class="btn btn-outline-secondary btn-sm" type="button">고객 추가</button></a>
+</div>

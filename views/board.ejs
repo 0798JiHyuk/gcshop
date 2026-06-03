@@ -1,0 +1,43 @@
+<div class="container">
+  <h1><%= btname[0].title %></h1>
+
+  <% if (!boards || boards.length === 0) { %>
+    <p>자료가 없습니다.</p>
+  <% } else { %>
+    <table class="table table-bordered border-primary">
+      <tr>
+        <td>작성자</td>
+        <td>제목</td>
+        <td>날짜</td>
+      </tr>
+      <% boards.forEach((board) => { %>
+        <tr>
+          <td><%= board.name %></td>
+          <td>
+            <% if (Number(board.p_id || 0) !== 0) { %>
+              <span style="display:inline-block; margin-left:24px;">└</span>
+            <% } %>
+            <a href="/board/detail/<%= board.board_id %>/<%= pNum %>"><%= board.title %></a>
+          </td>
+          <td><%= board.date %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+
+  <div class="mb-3">
+    <% for (let j = 1; j <= totalPages; j++) { %>
+      <% if (j === Number(pNum)) { %>
+        <span style="font-weight:bold;"><%= j %></span>&nbsp;&nbsp;
+      <% } else { %>
+        <span><a href="/board/view/<%= btname[0].type_id %>/<%= j %>"><%= j %></a></span>&nbsp;&nbsp;
+      <% } %>
+    <% } %>
+  </div>
+
+  <% if (canWrite) { %>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="/board/create/<%= btname[0].type_id %>"><button type="button" class="btn btn-info me-md-2">글쓰기</button></a>
+    </div>
+  <% } %>
+</div>

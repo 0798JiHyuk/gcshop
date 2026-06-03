@@ -1,0 +1,47 @@
+<div class="container">
+  <% if (!products || products.length === 0) { %>
+    <p>자료가 없으니 상품 추가 버튼으로 상품을 추가해 주십시오.</p>
+  <% } else { %>
+    <table class="table table-bordered table-hover" style="text-align: center;">
+      <thead class="table-primary">
+        <tr>
+          <th>상품</th>
+          <th>상품명</th>
+          <th>가격</th>
+          <th>재고</th>
+          <th>브랜드</th>
+          <% if (showControls) { %>
+            <th colspan="2">메뉴</th>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach((product) => { %>
+          <tr style="text-align: center; vertical-align: middle;">
+            <td>
+              <% if (product.image) { %>
+                <a href="/detail/<%= product.prod_id %>" style="text-decoration:none;">
+                  <img src="/image/<%= product.image %>" alt="<%= product.name %>" style="width:100px;height:100px;object-fit:cover;">
+                </a>
+              <% } else { %>
+                <a href="/detail/<%= product.prod_id %>" style="text-decoration:none;">이미지 없음</a>
+              <% } %>
+            </td>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= product.stock %></td>
+            <td><%= product.brand %></td>
+            <% if (showControls) { %>
+              <td><a href="/product/update/<%= product.prod_id %>">수정</a></td>
+              <td><a href="/product/delete/<%= product.prod_id %>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td>
+            <% } %>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (showControls) { %>
+    <a href="/product/create"><button class="btn btn-outline-secondary btn-sm" type="button">상품 추가</button></a>
+  <% } %>
+</div>

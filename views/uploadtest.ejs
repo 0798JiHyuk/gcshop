@@ -1,0 +1,15 @@
+<script>
+  function displayFileName() {
+    var fileName = $("#file").val();
+    $(".upload-name").val(fileName);
+  }
+</script>
+
+<form action="/upload_process" method="post" enctype="multipart/form-data">
+  <div class="filebox">
+    <input class="upload-name" value="" placeholder="첨부파일" readonly>
+    <label for="file">파일찾기</label>
+    <input type="file" id="file" name="uploadFile" onchange="displayFileName()">
+    <p><input class="btn btn-outline-secondary btn-sm mt-3" type="submit" value="upload"></p>
+  </div>
+</form>

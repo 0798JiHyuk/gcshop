@@ -1,0 +1,29 @@
+<div class="container">
+  <table class="table table-bordered">
+    <tr>
+      <td rowspan="6">
+        <% if (product.image) { %>
+          <img src="/image/<%= product.image %>" alt="<%= product.name %>" style="width:300px;height:300px;object-fit:cover;">
+        <% } else { %>
+          이미지 없음
+        <% } %>
+      </td>
+      <td><%= product.name %></td>
+    </tr>
+    <tr><td>가격 : <%= product.price %></td></tr>
+    <tr><td>브랜드 : <%= product.brand %></td></tr>
+    <tr><td>공급업체 : <%= product.supplier %></td></tr>
+    <tr>
+      <td>
+        <% if (cls === 'CST') { %>
+          <a href="/purchase/detail/<%= product.prod_id %>"><button class="btn btn-outline-primary btn-sm" type="button">구매</button></a>
+          <form action="/purchase/cart_process" method="post" style="display:inline-block;">
+            <input type="hidden" value="<%= product.prod_id %>" name="prod_id">
+            <button class="btn btn-outline-primary btn-sm" type="submit">장바구니</button>
+          </form>
+        <% } %>
+        <a href="/"><button class="btn btn-outline-primary btn-sm" type="button">상품 목록 돌아가기</button></a>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+  <h2>게시판 <%= mode === 'update' ? '수정' : '생성' %></h2>
+  <form action="<%= formAction %>" method="post">
+    <% if (mode === 'update') { %>
+      <input type="hidden" name="type_id" value="<%= boardtype.type_id %>">
+    <% } %>
+
+    <div class="mb-3">
+      <label class="form-label" for="title">제목</label>
+      <input class="form-control" id="title" type="text" name="title" value="<%= boardtype.title || '' %>" style="width:300px;" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="description">설명</label>
+      <input class="form-control" id="description" type="text" name="description" value="<%= boardtype.description || '' %>" style="width:300px;">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="numPerPage">페이지당 보여지는 글 수 </label>
+      <input class="form-control" id="numPerPage" type="text" name="numPerPage" value="<%= boardtype.numPerPage || '' %>" style="width:300px;">
+    </div>
+
+    <% const writeY = boardtype.write_YN === 'Y' ? 'checked' : ''; %>
+    <% const writeN = boardtype.write_YN !== 'Y' ? 'checked' : ''; %>
+    <label class="form-label">일반 사용자 쓰기 가능 여부 </label>
+    <div class="mb-3">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="write_YN" id="write_YN1" value="Y" <%= writeY %>>
+        <label class="form-check-label" for="write_YN1">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="write_YN" id="write_YN2" value="N" <%= writeN %>>
+        <label class="form-check-label" for="write_YN2">No</label>
+      </div>
+    </div>
+
+    <% const reY = boardtype.re_YN === 'Y' ? 'checked' : ''; %>
+    <% const reN = boardtype.re_YN !== 'Y' ? 'checked' : ''; %>
+    <label class="form-label" for="id">댓글 가능 여부</label>
+    <div class="mb-3">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="re_YN" id="re_YN1" value="Y" <%= reY %>>
+        <label class="form-check-label" for="re_YN1">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="re_YN" id="re_YN2" value="N" <%= reN %>>
+        <label class="form-check-label" for="re_YN2">No</label>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-primary btn-sm" type="submit"><%= mode === 'update' ? '수정' : '생성' %></button>
+  </form>
+</div>

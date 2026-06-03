@@ -1,0 +1,45 @@
+<div class="container">
+  <script>
+    function actionCheck() {
+      var tempOfCheck = 0;
+      $("input[name=check]:checked").each(function() {
+        tempOfCheck += 1;
+      });
+      document.getElementById('total').value = tempOfCheck;
+    }
+  </script>
+
+  <% if (!carts || carts.length === 0) { %>
+    <p>장바구니에 담긴 상품이 없습니다.</p>
+  <% } else { %>
+    <form action="/purchase/cartpurchase_process" method="post">
+      <table class="table table-bordered">
+        <tr><th>구매선택</th><th>상품</th><th>상품명</th><th>단가</th><th>담은날</th><th>수량</th></tr>
+        <% carts.forEach((cart) => { %>
+          <tr style="text-align:center;vertical-align:middle;">
+            <td><input type="checkbox" name="check" value="<%= cart.cart_id %>" onclick="actionCheck()"></td>
+            <td>
+              <a href="/detail/<%= cart.prod_id %>" style="text-decoration:none;">
+                <% if (cart.image) { %>
+                  <img src="/image/<%= cart.image %>" alt="<%= cart.name %>" style="width:100px;height:100px;object-fit:cover;">
+                <% } else { %>
+                  이미지 없음
+                <% } %>
+              </a>
+            </td>
+            <td><%= cart.name %></td>
+            <td><%= cart.price %></td>
+            <td><%= cart.date %></td>
+            <td><input type="number" name="qty_<%= cart.cart_id %>" value="1" min="1"></td>
+          </tr>
+        <% }) %>
+      </table>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-outline-primary btn-sm" type="submit">결재</button>
+        <input type="hidden" id="total" name="numOfCheck" value="0">
+        <button class="btn btn-outline-primary btn-sm" type="submit" formaction="/purchase/cartdelete_process" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
+      </div>
+    </form>
+  <% } %>
+  <a href="/"><button class="btn btn-outline-primary btn-sm" type="button">상품 목록 돌아가기</button></a>
+</div>

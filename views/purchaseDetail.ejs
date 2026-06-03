@@ -1,0 +1,26 @@
+<div class="container">
+  <table class="table table-bordered">
+    <form method="post">
+      <input type="hidden" name="prod_id" value="<%= product.prod_id %>">
+      <tr>
+        <td rowspan="5">
+          <% if (product.image) { %>
+            <img src="/image/<%= product.image %>" alt="<%= product.name %>" style="width:300px;height:300px;object-fit:cover;">
+          <% } else { %>
+            이미지 없음
+          <% } %>
+        </td>
+        <td><%= product.name %></td>
+      </tr>
+      <tr><td>가격 : <%= product.price %></td></tr>
+      <tr><td>브랜드 : <%= product.brand %></td></tr>
+      <tr><td>수량 : <input type="number" name="qty" value="1" min="1"></td></tr>
+      <tr>
+        <td>
+          <button class="btn btn-outline-primary btn-sm" formaction="/purchase" type="submit">결재</button>
+          <button class="btn btn-outline-primary btn-sm" formaction="/purchase/cart_process" type="submit">장바구니</button>
+        </td>
+      </tr>
+    </form>
+  </table>
+</div>

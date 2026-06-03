@@ -1,0 +1,53 @@
+<div class="container">
+  <h2><%= mode === 'update' ? '고객 수정' : (showClass ? '고객 입력' : '회원가입') %></h2>
+
+  <form action="<%= formAction %>" method="post">
+    <div class="mb-3">
+      <label class="form-label" for="loginid">ID</label>
+      <input class="form-control" id="loginid" type="text" name="loginid" maxlength="10" value="<%= person && person.loginid ? person.loginid : '' %>" style="width:300px;" <%= mode === 'update' ? 'readonly' : '' %> required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="password">PW</label>
+      <input class="form-control" id="password" type="password" name="password" maxlength="20" value="<%= person && person.password ? person.password : '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="name">이름</label>
+      <input class="form-control" id="name" type="text" name="name" maxlength="20" value="<%= person && person.name ? person.name : '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">성별</label>
+      <% const mf = person && person.mf ? person.mf : 'm'; %>
+      <input type="radio" name="mf" value="m" <%= mf === 'm' ? 'checked' : '' %>> 남자
+      <input type="radio" name="mf" value="f" <%= mf === 'f' ? 'checked' : '' %>> 여자
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="address">주소</label>
+      <input class="form-control" id="address" type="text" name="address" maxlength="100" value="<%= person && person.address ? person.address : '' %>" style="width:500px;">
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="tel">전화번호</label>
+      <input class="form-control" id="tel" type="text" name="tel" maxlength="13" placeholder="000-0000-0000" value="<%= person && person.tel ? person.tel : '' %>" style="width:300px;">
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="birth">생일</label>
+      <input class="form-control" id="birth" type="text" name="birth" maxlength="8" placeholder="YYYYMMDD" value="<%= person && person.birth ? person.birth : '' %>" style="width:300px;" required>
+    </div>
+
+    <% if (showClass) { %>
+      <div class="mb-3">
+        <label class="form-label" for="class">CLASS</label>
+        <% const personClass = person && person.class ? person.class : 'CST'; %>
+        <select class="form-select" id="class" name="class" style="width:300px;">
+          <option value="CST" <%= personClass === 'CST' ? 'selected' : '' %>>CST : 고객</option>
+          <option value="MNG" <%= personClass === 'MNG' ? 'selected' : '' %>>MNG : 관리자</option>
+          <option value="CEO" <%= personClass === 'CEO' ? 'selected' : '' %>>CEO : 경영진</option>
+        </select>
+      </div>
+    <% } %>
+
+    <button class="btn btn-outline-primary btn-sm" type="submit"><%= mode === 'update' ? '수정' : '입력' %></button>
+    <% if (showClass) { %>
+      <a href="/person/view"><button class="btn btn-outline-primary btn-sm" type="button">고객 목록 돌아가기</button></a>
+    <% } %>
+  </form>
+</div>

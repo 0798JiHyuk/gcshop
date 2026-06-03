@@ -1,0 +1,17 @@
+{
+  "name": "gcshop",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.1",
+    "multer": "^2.0.2",
+    "mysql": "^2.18.1",
+    "sanitize-html": "^2.14.0"
+  }
+}

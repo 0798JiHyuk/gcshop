@@ -1,0 +1,29 @@
+<div class="container">
+  <% if (!purchases || purchases.length === 0) { %>
+    <p>자료가 없습니다.</p>
+  <% } else { %>
+    <table class="table table-bordered">
+      <tr style="text-align:center;vertical-align:middle;">
+        <th>고객ID</th><th>고객명</th><th>상품ID</th><th>상품명</th><th>구매일</th><th>가격</th>
+        <th>포인트</th><th>구매량</th><th>총가격</th><th>지불여부</th><th>취소여부</th><th colspan="2"></th>
+      </tr>
+      <% purchases.forEach((purchase) => { %>
+        <tr style="text-align:center;vertical-align:middle;">
+          <td><%= purchase.loginid %></td>
+          <td><%= purchase.person_name %></td>
+          <td><%= purchase.prod_id %></td>
+          <td><%= purchase.product_name %></td>
+          <td><%= purchase.date %></td>
+          <td><%= purchase.price %></td>
+          <td><%= purchase.point %></td>
+          <td><%= purchase.qty %></td>
+          <td><%= purchase.total %></td>
+          <td><%= purchase.payYN %></td>
+          <td><%= purchase.cancel %></td>
+          <td><a href="/purchase/update/<%= purchase.purchase_id %>" style="text-decoration:none;">수정</a></td>
+          <td><a href="/purchase/delete/<%= purchase.purchase_id %>" style="text-decoration:none;" onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false">삭제</a></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+  <h2><%= mode === 'update' ? '코드 수정' : '코드 입력' %></h2>
+
+  <form action="<%= formAction %>" method="post">
+    <% if (mode === 'update') { %>
+      <input type="hidden" name="original_main_id" value="<%= original.main_id %>">
+      <input type="hidden" name="original_sub_id" value="<%= original.sub_id %>">
+      <input type="hidden" name="original_start" value="<%= original.start %>">
+    <% } %>
+
+    <div class="mb-3">
+      <label class="form-label" for="main_id">대분류</label>
+      <input class="form-control" id="main_id" type="text" name="main_id" maxlength="4" value="<%= code.main_id || '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="main_name">대분류명</label>
+      <input class="form-control" id="main_name" type="text" name="main_name" value="<%= code.main_name || '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="sub_id">소분류</label>
+      <input class="form-control" id="sub_id" type="text" name="sub_id" maxlength="4" value="<%= code.sub_id || '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="sub_name">소분류명</label>
+      <input class="form-control" id="sub_name" type="text" name="sub_name" value="<%= code.sub_name || '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="start">시작일</label>
+      <input class="form-control" id="start" type="text" name="start" maxlength="8" value="<%= code.start || '' %>" style="width:300px;" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="end">종료일</label>
+      <input class="form-control" id="end" type="text" name="end" maxlength="8" value="<%= code.end || '' %>" style="width:300px;" required>
+    </div>
+
+    <button class="btn btn-outline-primary btn-sm" type="submit"><%= mode === 'update' ? '수정' : '입력' %></button>
+    <a href="/code/view"><button class="btn btn-outline-primary btn-sm" type="button">코드 목록 돌아가기</button></a>
+  </form>
+</div>

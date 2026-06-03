@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>테이블 관리</h2>
+  <p class="text-muted">데이터베이스 메타데이터와 테이블 comment 정보를 조회합니다.</p>
+
+  <table class="table table-bordered border-primary table-hover">
+    <thead>
+      <tr>
+        <th>테이블명</th>
+        <th>테이블 설명</th>
+        <th>Rows</th>
+        <th>생성일</th>
+        <th>수정일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!tables || tables.length === 0) { %>
+        <tr>
+          <td colspan="5" class="text-center">테이블이 없습니다.</td>
+        </tr>
+      <% } else { %>
+        <% tables.forEach((table) => { %>
+          <tr>
+            <td>
+              <a href="/table/view/<%= table.table_name %>"><%= table.table_name %></a>
+            </td>
+            <td><%= table.table_comment || '-' %></td>
+            <td><%= table.table_rows == null ? '-' : table.table_rows %></td>
+            <td><%= table.create_time || '-' %></td>
+            <td><%= table.update_time || '-' %></td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
